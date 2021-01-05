@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGdxGame;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class AndroidLauncher extends AndroidApplication implements ApplicationListener {
+
 
 
 	@Override
@@ -30,22 +30,39 @@ public class AndroidLauncher extends AndroidApplication implements ApplicationLi
 	}
 
 
-	ShapeRenderer shapeRenderer;
-	ShapeRenderer shape;
+	ShapeRenderer shapeRendererBall;
+	ShapeRenderer shapeRendererPaddle;
+	ShapeRenderer shapeRendererBlock;
+
 	Ball ball;
 	Paddle paddle;
-	Random r = new Random();
+	Block block;
+
 	int rightSide = 1000;
 	int leftSide = 400;
-	int randomSideAtStart = Math.random()<0.5?-10:10;
+	//int randomSideAtStart = Math.random()<0.5?-10:10;
+
+	ArrayList<Block> blocksList = new ArrayList<>();
+	int blockWidth = 100;
+	int blockHeight = 20;
 
 	@Override
 	public void create() {
-		shapeRenderer = new ShapeRenderer();
-		shape = new ShapeRenderer();
-		ball = new Ball(500, 300, 40, 0, 0);
-		paddle = new Paddle(1000, 20, 200, 5);
+		shapeRendererBall = new ShapeRenderer();
+		shapeRendererPaddle = new ShapeRenderer();
+		shapeRendererBlock = new ShapeRenderer();
 
+		ball = new Ball((rightSide - leftSide) + leftSide, 1000, 40, 10, -20);
+		paddle = new Paddle(1000, 10, 200, 9);
+
+
+
+		for (int y = (int) (Gdx.graphics.getHeight()/1.5); y < Gdx.graphics.getHeight(); y += blockHeight + 10) {
+
+			for (int x = 0; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
+				blocksList.add(new Block(x, y, blockWidth, blockHeight));
+			}
+		}
 	}
 
 	@Override
@@ -58,17 +75,24 @@ public class AndroidLauncher extends AndroidApplication implements ApplicationLi
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		shapeRendererBall.begin(ShapeRenderer.ShapeType.Filled);
 		ball.update();
-		ball.draw(shapeRenderer);
+		ball.draw(shapeRendererBall);
 		ball.checkCollision(paddle);
 
-		shape.begin(ShapeRenderer.ShapeType.Filled);
-		paddle.draw(shape);
+		shapeRendererPaddle.begin(ShapeRenderer.ShapeType.Filled);
+		paddle.draw(shapeRendererPaddle);
 
 
-		shapeRenderer.end();
-		shape.end();
+		shapeRendererBlock.begin(ShapeRenderer.ShapeType.Filled);
+		for (Block block : blocksList) {
+			block.draw(shapeRendererBlock);
+
+		}
+
+		shapeRendererBall.end();
+		shapeRendererPaddle.end();
+		shapeRendererBlock.end();
 
 	}
 

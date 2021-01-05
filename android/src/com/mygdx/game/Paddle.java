@@ -17,9 +17,9 @@ public class Paddle {
     }
 
     public void draw(ShapeRenderer shape){
-        shape.rect(Gdx.input.getX(), Gdx.input.getY(), widht, height);
+        shape.rect(Gdx.input.getX(), this.y, widht, height);
         this.x = Gdx.input.getX();
-        this.y = Gdx.input.getY();
+
 
     }
 }

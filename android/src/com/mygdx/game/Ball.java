@@ -30,7 +30,7 @@ public class Ball {
             xSpeed = -xSpeed;
         }
         y+= ySpeed;
-        if (y < 0 || y > (Gdx.graphics.getHeight() - this.size )){
+        if ( y > (Gdx.graphics.getHeight() - this.size )){
             ySpeed = -ySpeed;
         }
 
@@ -43,12 +43,11 @@ public class Ball {
     public void checkCollision(Paddle paddle){
         if (collidesWith(paddle)){
             color= Color.WHITE;
+            ySpeed = -ySpeed;
         } else {
             color = Color.BROWN;
         }
     }
-
-
 
     private boolean collidesWith(Paddle paddle){
         // collision between paddle and ball
@@ -68,6 +67,4 @@ public class Ball {
 
 
     }
-
-
 }
