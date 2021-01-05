@@ -51,6 +51,7 @@ public class Ball {
 
 
     private boolean collidesWith(Paddle paddle){
+        // collision between paddle and ball
 
         double dx=Math.abs(this.x-(paddle.x+paddle.widht/2));
         double dy=Math.abs(this.y-(paddle.y+paddle.height/2));
