@@ -15,7 +15,7 @@ public class Ball {
     int xSpeed;
     int ySpeed;
     int size;
-    Color color = Color.WHITE;
+    Color color = Color.GREEN;
 
 
     public Ball(int x,  int y, int size, int xSpeed, int ySpeed) {
@@ -43,24 +43,20 @@ public class Ball {
     }
 
     Random r = new Random();
-    int firstRandom = 20;
-    int firstRandom2 = 1;
-    int secondRandom = -20;
-    int secondRandom2 = -1;
+    int minRandomX = 20;
+    int maxRandomX = 1;
+    int minRandomY = -20;
+    int maxRandomY = -1;
     public void checkCollision(Paddle paddle){
         if (collidesWith(paddle)){
-            color= Color.WHITE;
+
             ySpeed = -ySpeed;
             if (xSpeed >= 1){
-                xSpeed = r.nextInt((firstRandom - firstRandom2) + firstRandom2) ;
+                xSpeed = r.nextInt((minRandomX - maxRandomX) + minRandomX) ;
             }
             if (xSpeed  == - xSpeed){
-                xSpeed = (r.nextInt (secondRandom + secondRandom2) - secondRandom2);
+                xSpeed = (r.nextInt (minRandomY + maxRandomY) - maxRandomY);
             }
-
-
-        } else {
-            color = Color.BROWN;
         }
     }
     public void checkCollision(Block block){
