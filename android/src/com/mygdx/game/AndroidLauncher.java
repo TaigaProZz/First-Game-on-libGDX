@@ -36,15 +36,14 @@ public class AndroidLauncher extends AndroidApplication implements ApplicationLi
 
 	Ball ball;
 	Paddle paddle;
-	Block block;
 
 	int rightSide = 1000;
 	int leftSide = 400;
 	//int randomSideAtStart = Math.random()<0.5?-10:10;
 
 	ArrayList<Block> blocksList = new ArrayList<>();
-	int blockWidth = 100;
-	int blockHeight = 20;
+	int blockWidth = 175;
+	int blockHeight = 72;
 
 	@Override
 	public void create() {
@@ -52,12 +51,12 @@ public class AndroidLauncher extends AndroidApplication implements ApplicationLi
 		shapeRendererPaddle = new ShapeRenderer();
 		shapeRendererBlock = new ShapeRenderer();
 
-		ball = new Ball((rightSide - leftSide) + leftSide, 1000, 40, 10, -20);
-		paddle = new Paddle(1000, 10, 200, 9);
+		ball = new Ball((rightSide - leftSide) + leftSide, 1000, 40, 20, -20);
+		paddle = new Paddle(1000, 60, 200, 30);
 
 
 
-		for (int y = (int) (Gdx.graphics.getHeight()/1.5); y < Gdx.graphics.getHeight(); y += blockHeight + 10) {
+		for (int y = (Gdx.graphics.getHeight()/2); y < Gdx.graphics.getHeight(); y += blockHeight + 1) {
 
 			for (int x = 0; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
 				blocksList.add(new Block(x, y, blockWidth, blockHeight));
@@ -87,7 +86,15 @@ public class AndroidLauncher extends AndroidApplication implements ApplicationLi
 		shapeRendererBlock.begin(ShapeRenderer.ShapeType.Filled);
 		for (Block block : blocksList) {
 			block.draw(shapeRendererBlock);
-
+			ball.checkCollision(block);
+		}
+		for (int i = 0; i < blocksList.size(); i++ ){
+			Block block = blocksList.get(i);
+			if (block.isDestroyed()){
+				blocksList.remove(block);
+				block.setDestroyed(true);
+				i--;
+			}
 		}
 
 		shapeRendererBall.end();
